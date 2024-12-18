@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>PowerAnalyses.org</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/favicon.png">
+  <script src="pa.js"></script>
+  <script defer src="frontend.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+  <div class="content">
+    <div class="title center">
+      <img class="favicon" src="/favicon.png" />
+      PowerAnalyses.org Beta
+    </div>
+    <img class="plot center" src=""></img>
+
+    <div class="dropdowns border">
+      <label for="family">
+        Test family:<br>
+        <select class="drop-down" id="family" onchange="familyChanged()" name="type">
+          <option disabled value="exact">Exact</option>
+          <option value="f">F tests</option>
+          <option value="t">t tests</option>
+          <option value="chi">χ² tests</option>
+          <option disabled value="z">z tests</option>
+        </select><br>
+      </label>
+      <label for="test">
+        Statistical test:<br>
+        <select class="drop-down" id="test" onchange="updateNumberOutputAreas()" name="type">
+          <option value="1">ANCOVA - Fixed effects, main effects, and interactions</option>
+        </select><br>
+      </label>
+      <label for="analysis">
+        Type of power analysis:<br>
+        <select class="drop-down" id="analysis" onchange="updateNumberOutputAreas()" name="type">
+          <option value="n">Compute required sample size (a priori)</option>
+          <option value="alpha">Compute required α (criterion)</option>
+          <option value="power">Compute achieved power (post hoc)</option>
+          <option value="es">Compute required effect size (sensitivity)</option>
+        </select>
+      </label>
+      <br>
+      <br>
+    </div>
+    <div class="numbers">
+      <div>
+        <table id="input" class="border">
+          <tr>
+            <td>Tail:</td>
+            <td>
+              <select id="tail">
+                <option value="1">One tail</option>
+                <option value="2">Two tails</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+        <div class="output border">
+          <table id="output" class="center">
+            <tbody class="center">
+              <tr>
+                <td>Sample size:</td>
+                <td class="result">
+                  <input id="n" type="number" value="100" min="2" max="99999" step="5" onchange="updateOutput()"
+                    disabled>
+                </td>
+              </tr>
+              <tr>
+                <td>α err prob:</td>
+                <td class="result">
+                  <input id="alpha" type="number" value="0.05" min="0.01" max="0.99" step="0.01"
+                    onchange="updateOutput()">
+                </td>
+              </tr>
+              <tr>
+                <td>Power (1-β err prob):</td>
+                <td class="result">
+                  <input id="power" type="number" value="0.95" min="0" max="0.99" step="0.01" onchange="updateOutput()">
+                </td>
+              </tr>
+              <tr>
+                <td>Effect size:</td>
+                <td class="result">
+                  <input id="es" type="number" value="0.5" min="0" max="100" step="0.05" onchange="updateOutput()">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="error" class="center error">
+          </div>
+          <div class="center">
+            <button onclick="resetOutput()" class="resetBtn">Reset</button>
+            <button onclick="updateOutput()" class="calculateBtn">Calculate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="font-size: 1rem">
+      <center><b>Why this web site?</b></center><br>
+      Statistical power analyses play a key role in science.
+      However, the code for these tools isn't always public.
+      This project shares the code along with the tool, so that people can verify the code and improve it.
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="center footer">
+      PowerAnalyses.org version <VERSION>.
+        If you find a bug, please open an issue on <a
+          href="https://github.com/poweranalyses-org/poweranalyses">GitHub</a>.
+        This site was made possible thanks to the
+        <a
+          href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower.html">G*Power</a>
+        and
+        <a href="https://github.com/heliosdrm/pwr">pwr</a> projects.
+    </div>
+  </div>
+</body>
+
+</html>

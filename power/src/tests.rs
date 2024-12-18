@@ -116,17 +116,17 @@ fn deviation_from_zero_multiple_regression() {
 
 #[test]
 fn increase_multiple_regression() {
-    let p = "5";
+    let rho = "5";
     let q = "2";
     let f_squared = ES.sqrt();
     let join = with_rest("increaseMultipleRegression");
-    let extra = json!({"p": p, "q": q, "es": f_squared, "analysis": "alpha"});
+    let extra = json!({"rho": rho, "q": q, "es": f_squared, "analysis": "alpha"});
     test_interface(&join(&extra), 0.006);
-    let extra = json!({"p": p, "q": q, "es": f_squared, "analysis": "power"});
+    let extra = json!({"rho": rho, "q": q, "es": f_squared, "analysis": "power"});
     test_interface(&join(&extra), 0.994);
-    let extra = json!({"p": p, "q": q, "es": f_squared, "analysis": "es"});
+    let extra = json!({"rho": rho, "q": q, "es": f_squared, "analysis": "es"});
     test_interface(&join(&extra), 0.575); // take the sqrt of G*Power.
-    let extra = json!({"p": p, "q": q, "es": f_squared, "analysis": "n"});
+    let extra = json!({"rho": rho, "q": q, "es": f_squared, "analysis": "n"});
     test_interface(&join(&extra), 35.0);
 }
 

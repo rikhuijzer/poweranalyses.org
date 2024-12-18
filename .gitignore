@@ -9,5 +9,4 @@
 **/*.pdb
 
 # Static
-**/public/pa.wasm
-**/public/pa.js
+**/public/

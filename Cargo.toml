@@ -1,13 +1,10 @@
 [workspace]
-members = ["dist", "power"]
+members = [
+    "dist",
+    "power"
+]
 resolver = "2"
 
 [profile.release]
 # Tell `rustc` to optimize for small code size.
 opt-level = "s"
-
-[workspace.package]
-authors = [
-    "Rik Huijzer <rust@huijzer.xyz>",
-    "Jose Storopoli <jose@storopoli.io>",
-]

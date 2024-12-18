@@ -29,7 +29,7 @@ pub enum TestKind {
     /// Multiple regression: increase of R^2.
     IncreaseMultipleRegression {
         /// Total number of predictors (#A + #B).
-        p: i64,
+        rho: i64,
         /// Number of tested predictors (#B).
         q: i64,
     },
@@ -151,9 +151,9 @@ impl TestKind {
                 Ok(TestKind::DeviationFromZeroMultipleRegression { n_predictors })
             }
             "increaseMultipleRegression" => {
-                let p = parse_i64(data, "p").unwrap();
+                let rho = parse_i64(data, "rho").unwrap();
                 let q = parse_i64(data, "q").unwrap();
-                Ok(TestKind::IncreaseMultipleRegression { p, q })
+                Ok(TestKind::IncreaseMultipleRegression { rho, q })
             }
             "ANCOVA" => {
                 let k = parse_i64(data, "k").unwrap();
@@ -225,9 +225,9 @@ impl TestKind {
             TestKind::GoodnessOfFitChisqTest { df } => {
                 Box::new(NoncentralChisq::new(*df as f64, es.powi(2) * n))
             }
-            TestKind::IncreaseMultipleRegression { p, q } => Box::new(NoncentralF::new(
+            TestKind::IncreaseMultipleRegression { rho, q } => Box::new(NoncentralF::new(
                 *q as f64,
-                n - (*p as f64) - 1.0,
+                n - (*rho as f64) - 1.0,
                 es.powi(2) * n,
             )),
             TestKind::ANCOVA { k, q, p } => Box::new(NoncentralF::new(

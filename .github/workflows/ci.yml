@@ -15,6 +15,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Add release date to index.html
+        run: |
+          VERSION="$(date +'%Y-%m-%d %H:%M')"
+          sed --in-place "s/<VERSION>/$VERSION/g" index.html
+        shell: bash
+
       - name: Setup emscripten SDK
         uses: mymindstorm/setup-emsdk@v14
         with:
@@ -22,11 +28,6 @@ jobs:
 
       - name: Verify emscripten
         run: emcc -v
-
-      - name: Setup just
-        uses: extractions/setup-just@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Stable Rust with emscripten target
         run: rustup target add wasm32-unknown-emscripten
@@ -40,33 +41,16 @@ jobs:
       - name: Cargo fmt
         run: cargo fmt --all --check
 
-      - name: Test
-        run: just test
+      - name: Cargo test
+        run: cargo test
 
-      - name: Build site
-        run: just b
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: app/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-        working-directory: app
-
-      - name: build
-        run: |
-          npm run build
-        working-directory: app
-
+      - name: Build site into the public/ dir
+        run: ./script/build.sh
 
       - uses: actions/upload-pages-artifact@v3
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          path: './app/dist'
+          path: './public'
           retention-days: '1'
 
   deploy:
