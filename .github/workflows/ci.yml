@@ -48,7 +48,7 @@ jobs:
         run: cargo test
 
       - name: Build site into the public/ dir
-        run: ./script/build.sh
+        run: just build
 
       - uses: actions/upload-pages-artifact@v3
         if: ${{ github.event_name != 'pull_request' }}
