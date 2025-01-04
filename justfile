@@ -69,6 +69,7 @@ serve:
     set -e
 
     echo "Starting server..."
+    # Not using wasm-pack because I had many issues with it.
     # Using https://github.com/tapio/live-server because it loads fast and supports live reload.
     # Install with npm install -g live-server.
     # Or via Nix, install nodePackages_latest.live-server.
