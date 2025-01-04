@@ -29,6 +29,9 @@ jobs:
       - name: Verify emscripten
         run: emcc -v
 
+      - name: Setup just
+        uses: extractions/setup-just@v2
+
       - name: Setup Stable Rust with emscripten target
         run: rustup target add wasm32-unknown-emscripten
 
